@@ -41,15 +41,15 @@ const LandingPage = () => {
         </div>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="p-4 bg-white shadow rounded-lg">
-            <h3 className="text-xl font-semibold mb-2">Easy Inventory Management</h3>
+            <h3 className="text-xl text-center font-semibold mb-2">Easy Inventory Management</h3>
             <p>Quickly add, remove, and update items in your pantry. Our user-friendly interface makes it simple to keep your pantry organized and up-to-date.</p>
           </div>
           <div className="p-4 bg-white shadow rounded-lg">
-            <h3 className="text-xl font-semibold mb-2">Smart Search and Filter</h3>
+            <h3 className="text-xl text-center font-semibold mb-2">Smart Search and Filter</h3>
             <p>Find what you need in seconds with our smart search and filter options. Easily locate, view, and manage your pantry efficiently.</p>
           </div>
           <div className="p-4 bg-white shadow rounded-lg">
-            <h3 className="text-xl font-semibold mb-2">Generate Fascinating Recipes</h3>
+            <h3 className="text-xl text-center font-semibold mb-2">Generate Fascinating Recipes</h3>
             <p>Get inspired with our recipe generator. Using the ingredients in your pantry, we&apos;ll suggest delicious recipes you can make right now.</p>
           </div>
         </div>

@@ -1,16 +1,46 @@
-import React from 'react';
+import React, { useState } from 'react';
+import Modal from 'react-modal';
+import { generateRecipe } from '@/lib/openai';
 
-const RecipeModal = ({ isOpen, onClose }: { isOpen: boolean, onClose: () => void }) => {
-  if (!isOpen) return null;
+const RecipeModal = ({ isOpen, onClose, ingredients }: { isOpen: boolean, onClose: () => void, ingredients: string[] }) => {
+  const [recipe, setRecipe] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
+
+  const handleGenerateRecipe = async () => {
+    setLoading(true);
+    setRecipe(null);
+    setError(null);
+    try {
+      const generatedRecipe = await generateRecipe(ingredients);
+      if (generatedRecipe) {
+        setRecipe(generatedRecipe);
+      } else {
+        setError('Failed to generate a recipe.');
+      }
+    } catch (err) {
+      setError('Error generating recipe. Please try again.');
+    }
+    setLoading(false);
+  };
 
   return (
-    <div className="fixed inset-0 bg-gray-600 bg-opacity-50 flex justify-center items-center">
-      <div className="bg-white p-6 rounded shadow-lg">
-        <h2 className="text-2xl mb-4">Generate a Recipe</h2>
-        <button className="btn-primary" onClick={onClose}>Generate a Recipe</button>
-        <button className="mt-4 text-red-500" onClick={onClose}>Close</button>
+    <Modal isOpen={isOpen} onRequestClose={onClose} contentLabel="Generate Recipe">
+      <div className="p-4">
+        <h2 className="text-2xl font-bold mb-4">Generate Recipe</h2>
+        <button onClick={handleGenerateRecipe} className="btn-primary mb-4" disabled={loading}>
+          {loading ? 'Generating...' : 'Generate Recipe'}
+        </button>
+        {error && <p className="text-red-500">{error}</p>}
+        {recipe && (
+          <div>
+            <h3 className="text-xl font-bold mb-2">Generated Recipe</h3>
+            <p>{recipe}</p>
+          </div>
+        )}
+        <button onClick={onClose} className="btn-secondary mt-4">Close</button>
       </div>
-    </div>
+    </Modal>
   );
 };
 

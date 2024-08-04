@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 
-const AddItemForm = ({ addItem }: { addItem: (name: string, quantity: number) => void }) => {
-  const [name, setName] = useState('');
-  const [quantity, setQuantity] = useState(1);
+const EditItemForm = ({ item, editItem, cancelEdit }: { item: { id: string, name: string, quantity: number }, editItem: (id: string, name: string, quantity: number) => void, cancelEdit: () => void }) => {
+  const [name, setName] = useState(item.name);
+  const [quantity, setQuantity] = useState(item.quantity);
   const [error, setError] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -11,9 +11,7 @@ const AddItemForm = ({ addItem }: { addItem: (name: string, quantity: number) =>
       setError('Quantity must be greater than 0');
       return;
     }
-    addItem(name, quantity);
-    setName('');
-    setQuantity(1);
+    editItem(item.id, name, quantity);
     setError('');
   };
 
@@ -38,7 +36,8 @@ const AddItemForm = ({ addItem }: { addItem: (name: string, quantity: number) =>
             required 
             min="1"
           />
-          <button type="submit" className="btn-primary w-1/4">Add Item</button>
+          <button type="submit" className="btn-primary w-1/4">Save</button>
+          <button type="button" className="btn-secondary w-1/4" onClick={cancelEdit}>Cancel</button>
         </div>
         {error && <p className="text-red-500">{error}</p>}
       </div>
@@ -46,4 +45,4 @@ const AddItemForm = ({ addItem }: { addItem: (name: string, quantity: number) =>
   );
 };
 
-export default AddItemForm;
+export default EditItemForm;
