@@ -37,5 +37,3 @@ yarn-error.log*
 next-env.d.ts
 
 # Firebase
-/lib/firebase.ts
-/lib/firestore.ts
