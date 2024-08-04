@@ -94,12 +94,6 @@ const Dashboard: React.FC = () => {
 
   const ingredients = items.map(item => item.name);
 
-  // const checkUser = () => {
-  //   if (!user) {
-  //     router.push('/sign-in');
-  //   }
-  // }
-
   return (
     <>
       <ProtectedRoute>

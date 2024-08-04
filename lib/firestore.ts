@@ -12,10 +12,17 @@ export const addItemToFirestore = async (userId: string, name: string, quantity:
   });
 };
 
-export const getItemsFromFirestore = async (userId: string) => {
+export const getItemsFromFirestore = async (userId: string): Promise<Array<{ id: string; name: string; quantity: number }>> => {
   const q = query(inventoryCollection, where('userId', '==', userId));
   const querySnapshot = await getDocs(q);
-  return querySnapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
+
+  const items: Array<{ id: string; name: string; quantity: number }> = [];
+  querySnapshot.forEach((doc) => {
+    const data = doc.data();
+    items.push({ id: doc.id, name: data.name, quantity: data.quantity });
+  });
+
+  return items;
 };
 
 export const updateItemInFirestore = async (id: string, name: string, quantity: number) => {
